@@ -6,31 +6,29 @@ import Modal from "./Modal";
 import styles from "./PostsList.module.css";
 import MainHeader from "./MainHeader";
 
-function Postlist({ isPosting, onStopPosting }) {
-  const [author, setAuthor] = useState("dan");
-  const [body, setBody] = useState("dan is good");
+function Postlist({ isPosting, onStopPosting, posts, handlePostLists }) {
+  const handlePostListsLocal = (post) => {
+    handlePostLists(post);
+  };
 
-  function bodyChangeHandler(event) {
-    setBody(event.target.value);
-  }
-
-  function authorChangeHandler(event) {
-    setAuthor(event.target.value);
-  }
+  const renderPosts = () => {
+    return posts.map(({ author, body }, index) => (
+      <Post author={author} body={body} key={index} />
+    ));
+  };
 
   return (
     <>
       {isPosting && (
         <Modal onClose={onStopPosting}>
           <NewPost
-            onAuthorChange={authorChangeHandler}
-            onBodyChange={bodyChangeHandler}
+            handlePostLists={handlePostListsLocal}
+            onStopPosting={onStopPosting}
           />
         </Modal>
       )}
       <ul className={styles["posts"]}>
-        <Post author={author} body={body} />
-        <Post author={"author2"} body={"body2"} />
+        {posts.length != 0 ? renderPosts() : "No posts yet"}
       </ul>
     </>
   );
