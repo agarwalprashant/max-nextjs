@@ -4,11 +4,11 @@ import NewPost from "./NewPost";
 import Post from "./Post";
 import Modal from "./Modal";
 import styles from "./PostsList.module.css";
+import MainHeader from "./MainHeader";
 
-function Postlist() {
+function Postlist({ isPosting, onStopPosting }) {
   const [author, setAuthor] = useState("dan");
   const [body, setBody] = useState("dan is good");
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   function bodyChangeHandler(event) {
     setBody(event.target.value);
@@ -18,19 +18,10 @@ function Postlist() {
     setAuthor(event.target.value);
   }
 
-  function openModalHandler() {
-    setIsModalOpen(true);
-  }
-
-  function closeModalHandler() {
-    setIsModalOpen(false);
-  }
-
   return (
     <>
-      <button onClick={openModalHandler}>Add New Post</button>
-      {isModalOpen && (
-        <Modal onClose={closeModalHandler}>
+      {isPosting && (
+        <Modal onClose={onStopPosting}>
           <NewPost
             onAuthorChange={authorChangeHandler}
             onBodyChange={bodyChangeHandler}

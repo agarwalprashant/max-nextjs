@@ -1,12 +1,25 @@
 import Postlist from "./components/PostsList";
+import MainHeader from "./components/MainHeader";
+import { useState } from "react";
 
 function App() {
-  return (
-    <main>
-      <Postlist />
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-      <h1>Hello World!</h1>
-    </main>
+  function openModalHandler() {
+    setIsModalOpen(true);
+  }
+
+  function closeModalHandler() {
+    setIsModalOpen(false);
+  }
+
+  return (
+    <>
+      <MainHeader onCreatePost={openModalHandler} />
+      <main>
+        <Postlist isPosting={isModalOpen} onStopPosting={closeModalHandler} />
+      </main>
+    </>
   );
 }
 
