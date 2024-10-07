@@ -4,11 +4,6 @@ import { useState } from "react";
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [posts, setPosts] = useState([]);
-
-  function handlePostLists(post) {
-    setPosts((prevPosts) => [post, ...prevPosts]);
-  }
 
   function openModalHandler() {
     setIsModalOpen(true);
@@ -22,12 +17,7 @@ function App() {
     <>
       <MainHeader onCreatePost={openModalHandler} />
       <main>
-        <Postlist
-          isPosting={isModalOpen}
-          onStopPosting={closeModalHandler}
-          posts={posts}
-          handlePostLists={handlePostLists}
-        />
+        <Postlist isPosting={isModalOpen} onStopPosting={closeModalHandler} />
       </main>
     </>
   );
